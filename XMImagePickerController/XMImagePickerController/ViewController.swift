@@ -40,7 +40,9 @@ class ViewController: UIViewController {
                 return
             }
             
-            print("弹出选择图片视图")
+            let nav = AlbumNavigationController()
+            nav.addChildVC()
+            self.present(nav, animated: true, completion: nil)
         }
     }
     

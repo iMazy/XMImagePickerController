@@ -12,16 +12,15 @@ class AlbumNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationBar.tintColor = UIColor.white
         
         navigationBar.titleTextAttributes = [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 17)]
         
         self.interactivePopGestureRecognizer?.delegate = nil
         
+    }
+    
+    func addChildVC()  {
         addChildViewController(AlbumListViewController())
         addChildViewController(PhotosViewController())
-
-
     }
 }

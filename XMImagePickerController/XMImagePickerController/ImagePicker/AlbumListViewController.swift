@@ -42,6 +42,7 @@ class AlbumListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "AlbumListViewCell", bundle: nil), forCellReuseIdentifier: "albumReuseCellIdentifier")
+        view.addSubview(tableView)
     }
     
     func dismissAction() {
@@ -105,8 +106,8 @@ extension AlbumListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: AlbumListViewCell = tableView.dequeueReusableCell(withIdentifier: "albumReuseCell", for: indexPath) as! AlbumListViewCell
-//        cell.config(with: self.albums[indexPath.row])
+        let cell: AlbumListViewCell = tableView.dequeueReusableCell(withIdentifier: "albumReuseCellIdentifier", for: indexPath) as! AlbumListViewCell
+        cell.config(with: self.albums[indexPath.row])
         return cell
     }
     

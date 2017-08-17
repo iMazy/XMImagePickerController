@@ -12,9 +12,155 @@ import Photos
 class PhotosViewController: UIViewController {
     
     var assetResult: PHFetchResult<PHAsset>?
+    fileprivate var selectedIndexSet: Set<IndexPath> = []
+    
+    fileprivate lazy var fetchOptions: PHFetchOptions = {
+        let options = PHFetchOptions()
+        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        options.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
+        options.includeAllBurstAssets = false
+        options.includeHiddenAssets = false
+        return options
+    }()
+
+    
+    fileprivate var collectionView: UICollectionView!
+    fileprivate var flowLayout: UICollectionViewFlowLayout!
+    
+    fileprivate var toolBarHeight: CGFloat = 44
+    
+    fileprivate var previewButton: UIButton!
+    fileprivate var confirmButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .yellow
+        
+        setupUI()
+        
+        fetchPhotos()
+    }
+    
+    fileprivate func setupUI() {
+        
+        let backButton = UIButton(type: .custom)
+        backButton.setTitle("返回", for: .normal)
+        backButton.setTitleColor(UIColor.black, for: .normal)
+        backButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        backButton.titleEdgeInsets = UIEdgeInsetsMake(0, 7, 0, 0)
+        backButton.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0)
+        backButton.setImage(UIImage(named: "backImage"), for: .normal)
+        backButton.addTarget(self, action: #selector(backAction), for: .touchUpInside)
+        backButton.sizeToFit()
+        backButton.frame.size.width += 7
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        
+        let cancelButton = UIButton(type: .custom)
+        cancelButton.setTitle("取消", for: .normal)
+        cancelButton.setTitleColor(UIColor.black, for: .normal)
+        cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        cancelButton.addTarget(self, action: #selector(cancelAction), for: .touchUpInside)
+        cancelButton.sizeToFit()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: cancelButton)
+        
+        flowLayout = UICollectionViewFlowLayout()
+        let margin: CGFloat = 4
+        let WH: CGFloat = (UIScreen.main.bounds.width-margin*4)/3
+        flowLayout.itemSize = CGSize(width: WH, height: WH)
+        flowLayout.minimumLineSpacing = margin
+        flowLayout.minimumInteritemSpacing = margin
+        
+        collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-toolBarHeight), collectionViewLayout: flowLayout)
+        collectionView.contentInset = UIEdgeInsetsMake(margin, margin, margin, margin)
+        collectionView.showsHorizontalScrollIndicator = false
+        
+        collectionView.register(UINib(nibName: "PhotoCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "photoReuseIdentifier")
+        collectionView.backgroundColor = .green
+        view.addSubview(collectionView)
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+    }
+    
+    fileprivate func fetchPhotos() {
+        if let _ = assetResult {
+        } else {
+            self.navigationItem.title = "相机胶卷"
+            self.assetResult = PHAsset.fetchAssets(with: self.fetchOptions)
+        }
+        self.collectionView.reloadData()
+        
+        DispatchQueue.main.async {
+            if let assetResult = self.assetResult {
+                let lastItemIndex = IndexPath(row: assetResult.count-1, section: 0)
+                self.collectionView?.scrollToItem(at: lastItemIndex, at: .bottom, animated: false)
+            }
+        }
+    }
+    
+    @objc fileprivate func cancelAction() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+     @objc fileprivate func backAction() {
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension PhotosViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let assetResult = assetResult {
+            return assetResult.count
+        }
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: PhotoCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoReuseIdentifier", for: indexPath) as! PhotoCollectionViewCell
+        if let assetResult = assetResult {
+            cell.config(with: assetResult.object(at: indexPath.row), selected: false)
+        }
+        cell.backgroundColor = .red
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let cell = collectionView.cellForItem(at: indexPath) as! PhotoCollectionViewCell
+        
+        if self.selectedIndexSet.count > 8 && !cell.isSelect {
+            let alertVC = UIAlertController(title: "你最多只能选择9张照片", message: nil, preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "我知道了", style: .default, handler: nil)
+            alertVC.addAction(cancelAction)
+            self.present(alertVC, animated: true, completion: nil)
+            return
+        }
+        
+        cell.isSelect = !cell.isSelect
+        
+        if cell.isSelect {
+            self.selectedIndexSet.insert(indexPath)
+        } else {
+            self.selectedIndexSet.remove(indexPath)
+        }
+        
+        updateBottomToolBar()
+        
+    }
+    
+    fileprivate func updateBottomToolBar() {
+        
+        self.previewButton.isEnabled = self.selectedIndexSet.count > 0
+        self.confirmButton.isEnabled = self.previewButton.isEnabled
+        
+        if self.selectedIndexSet.count > 0 {
+            self.confirmButton.setTitle("确认(\(self.selectedIndexSet.count))", for: .normal)
+            self.confirmButton.alpha = 1
+        } else {
+            self.confirmButton.setTitle("确认", for: .normal)
+            self.confirmButton.alpha = 0.5
+        }
     }
 }
