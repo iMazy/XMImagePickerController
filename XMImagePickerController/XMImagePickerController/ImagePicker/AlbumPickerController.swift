@@ -19,15 +19,10 @@ class PHAssetManager {
         options.isSynchronous = false
         options.isNetworkAccessAllowed = true
         
-        
-        let scale: CGFloat = UIScreen.main.scale
-        let newWidth: CGFloat = UIScreen.main.bounds.width * scale
-        
+        let newWidth: CGFloat = UIScreen.main.bounds.width
         var newSize: CGSize = CGSize()
-        
         if scaled {
             if photoAsset.pixelWidth > Int(newWidth) {
-                
                 let newHeight: CGFloat = CGFloat(photoAsset.pixelHeight)/CGFloat(photoAsset.pixelWidth) * newWidth
                 newSize = CGSize(width: newWidth, height:newHeight)
             } else {

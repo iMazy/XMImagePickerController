@@ -12,7 +12,7 @@ import Photos
 class PhotosViewController: UIViewController {
     
     var assetResult: PHFetchResult<PHAsset>?
-    fileprivate var selectedIndexSet: Set<IndexPath> = []
+    fileprivate var selectedIndex: [Int] = []
     
     fileprivate lazy var fetchOptions: PHFetchOptions = {
         let options = PHFetchOptions()
@@ -148,8 +148,8 @@ class PhotosViewController: UIViewController {
 
     private func getSelectedAssets() -> [PHAsset] {
         var assetArray: [PHAsset] = [PHAsset]()
-        self.selectedIndexSet.forEach { (indexPath) in
-            if let asset = self.assetResult?.object(at: indexPath.row) {
+        self.selectedIndex.forEach { (index) in
+            if let asset = self.assetResult?.object(at: index) {
                 assetArray.append(asset)
             }
         }
@@ -201,7 +201,7 @@ extension PhotosViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         let cell = collectionView.cellForItem(at: indexPath) as! PhotoCollectionViewCell
         
-        if self.selectedIndexSet.count > 8 && !cell.isSelect {
+        if self.selectedIndex.count > 8 && !cell.isSelect {
             let alertVC = UIAlertController(title: "你最多只能选择9张照片", message: nil, preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "我知道了", style: .default, handler: nil)
             alertVC.addAction(cancelAction)
@@ -212,10 +212,12 @@ extension PhotosViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.isSelect = !cell.isSelect
         
         if cell.isSelect {
-            self.selectedIndexSet.insert(indexPath)
+            self.selectedIndex.append(indexPath.row)
         } else {
-            self.selectedIndexSet.remove(indexPath)
+            self.selectedIndex = self.selectedIndex.filter({ $0 != indexPath.row })
         }
+        
+        print(self.selectedIndex)
         
         updateBottomToolBar()
         
@@ -223,11 +225,11 @@ extension PhotosViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     fileprivate func updateBottomToolBar() {
         
-        self.previewButton.isEnabled = self.selectedIndexSet.count > 0
+        self.previewButton.isEnabled = self.selectedIndex.count > 0
         self.confirmButton.isEnabled = self.previewButton.isEnabled
         
-        if self.selectedIndexSet.count > 0 {
-            self.confirmButton.setTitle("确认(\(self.selectedIndexSet.count))", for: .normal)
+        if self.selectedIndex.count > 0 {
+            self.confirmButton.setTitle("确认(\(self.selectedIndex.count))", for: .normal)
             self.confirmButton.alpha = 1
         } else {
             self.confirmButton.setTitle("确认", for: .normal)
