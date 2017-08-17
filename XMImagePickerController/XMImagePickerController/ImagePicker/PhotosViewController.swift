@@ -28,14 +28,32 @@ class PhotosViewController: UIViewController {
     fileprivate var flowLayout: UICollectionViewFlowLayout!
     
     fileprivate var toolBarHeight: CGFloat = 44
+    fileprivate var toolBarView: UIView!
     
-    fileprivate var previewButton: UIButton!
-    fileprivate var confirmButton: UIButton!
+    fileprivate var previewButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("预览", for: .normal)
+        btn.setTitleColor(UIColor(red: 255/255.0, green: 42/255.0, blue: 102/255.0, alpha: 1.0), for: .normal)
+        btn.setTitleColor(UIColor.darkGray, for: .disabled)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        btn.sizeToFit()
+        return btn
+    }()
+    fileprivate var confirmButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setTitle("确认", for: .normal)
+        btn.backgroundColor = UIColor(red: 255/255.0, green: 42/255.0, blue: 102/255.0, alpha: 1.0)
+        btn.setTitleColor(UIColor.white, for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        btn.sizeToFit()
+        return btn
+    }()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .yellow
+        view.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 241/255.0, alpha: 1.0)
         
         setupUI()
         
@@ -64,6 +82,8 @@ class PhotosViewController: UIViewController {
         cancelButton.sizeToFit()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: cancelButton)
         
+        updateBottomToolBar()
+        
         flowLayout = UICollectionViewFlowLayout()
         let margin: CGFloat = 4
         let WH: CGFloat = (UIScreen.main.bounds.width-margin*4)/3
@@ -71,16 +91,27 @@ class PhotosViewController: UIViewController {
         flowLayout.minimumLineSpacing = margin
         flowLayout.minimumInteritemSpacing = margin
         
-        collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-toolBarHeight), collectionViewLayout: flowLayout)
+        collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-toolBarHeight-1), collectionViewLayout: flowLayout)
         collectionView.contentInset = UIEdgeInsetsMake(margin, margin, margin, margin)
         collectionView.showsHorizontalScrollIndicator = false
-        
-        collectionView.register(UINib(nibName: "PhotoCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "photoReuseIdentifier")
-        collectionView.backgroundColor = .green
+                
+        collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: "photoReuseIdentifier")
+        collectionView.backgroundColor = .white
         view.addSubview(collectionView)
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        toolBarView = UIView(frame: CGRect(x: 0, y: collectionView.frame.maxY+1, width: UIScreen.main.bounds.width, height: toolBarHeight))
+        toolBarView.backgroundColor = UIColor.white
+        view.addSubview(toolBarView)
+        
+        previewButton.frame = CGRect(x: 0, y: 0, width: 60, height: toolBarHeight)
+        toolBarView.addSubview(previewButton)
+        
+        confirmButton.frame = CGRect(x: view.bounds.width-60-16, y: (toolBarHeight-30)/2, width: 60, height: 30)
+        confirmButton.layer.cornerRadius = 5
+        toolBarView.addSubview(confirmButton)
         
     }
     
@@ -120,9 +151,8 @@ extension PhotosViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: PhotoCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoReuseIdentifier", for: indexPath) as! PhotoCollectionViewCell
         if let assetResult = assetResult {
-            cell.config(with: assetResult.object(at: indexPath.row), selected: false)
+            cell.config(with: assetResult.object(at: indexPath.row))
         }
-        cell.backgroundColor = .red
         return cell
     }
     
