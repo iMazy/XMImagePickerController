@@ -41,7 +41,7 @@ class AlbumListViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "AlbumListViewCell", bundle: nil), forCellReuseIdentifier: "albumReuseCellIdentifier")
+        tableView.register(AlbumListViewCell.self, forCellReuseIdentifier: "albumReuseCellIdentifier")
         view.addSubview(tableView)
     }
     
