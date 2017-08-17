@@ -24,22 +24,9 @@ class PreViewCollectionViewCell: UICollectionViewCell {
     }
     
     func config(with photoAsset: PHAsset) {
-        let options = PHImageRequestOptions()
-        options.deliveryMode = .highQualityFormat
-        options.resizeMode = .exact
-        options.isSynchronous = false
-        options.isNetworkAccessAllowed = true
         
-        PHImageManager.default().requestImage(
-            for: photoAsset,
-            targetSize: PHImageManagerMaximumSize,
-            contentMode: .aspectFill,
-            options: options
-        ) { [weak self] image, info in
-            guard let sSelf = self else { return }
-            if let image = image {
-                sSelf.photoImageView.image = image
-            }
+        PHAssetManager.transformPHAssetToImage(with: photoAsset, scaled: false) { [unowned self] (image) in
+            self.photoImageView.image = image
         }
     }
     

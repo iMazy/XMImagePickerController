@@ -23,7 +23,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     }
     
     func config(with photoAsset: PHAsset) {
-                
+        
         let options = PHImageRequestOptions()
         options.deliveryMode = .highQualityFormat
         options.resizeMode = .exact

@@ -12,8 +12,10 @@ import Photos
 class ViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    
+    
+    fileprivate var dataSource: [UIImage] = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +44,10 @@ class ViewController: UIViewController {
             
             let nav = AlbumPickerController()
             nav.addChildVC()
+            nav.completedSelected = { assets in
+                self.dataSource = assets
+                self.collectionView.reloadData()
+            }
             self.present(nav, animated: true, completion: nil)
         }
     }
@@ -69,17 +75,22 @@ class ViewController: UIViewController {
 
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return self.dataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: HomeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "homeCellReusableIdentifier", for: indexPath) as! HomeCollectionViewCell
-        cell.backgroundColor = UIColor.red
+        cell.iconImageView.image = dataSource[indexPath.row]
         return cell
     }
 }
 
-
 class HomeCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var collectionView: UIImageView!
+    @IBOutlet weak var iconImageView: UIImageView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.iconImageView.contentMode = .scaleAspectFill
+    }
+    
 }

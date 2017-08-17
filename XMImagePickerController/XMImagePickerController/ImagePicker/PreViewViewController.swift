@@ -62,7 +62,20 @@ class PreViewViewController: UIViewController {
     }
 
     @objc private func confirmButtonAction() {
-        print(self.assetArray ?? [])
+
+        let albumNav = self.navigationController as! AlbumPickerController
+        var imageArray: [UIImage] = [UIImage]()
+        assetArray?.forEach({ (asset) in
+            PHAssetManager.transformPHAssetToImage(with: asset) { image in
+                imageArray.append(image)
+                
+                if imageArray.count == self.assetArray?.count {
+                    if let complete = albumNav.completedSelected  {
+                        complete(imageArray)
+                    }
+                }
+            }
+        })
         self.dismiss(animated: true, completion: nil)
     }
 

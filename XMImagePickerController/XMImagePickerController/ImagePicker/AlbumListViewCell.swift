@@ -32,29 +32,11 @@ class AlbumListViewCell: UITableViewCell {
         self.albumNameLabel.sizeToFit()
         self.countLabel.sizeToFit()
         
-        
         if let asset = model.assetResult?.lastObject {
             
-            let scale: CGFloat = UIScreen.main.scale
-            let newSize: CGSize = CGSize(
-                width: self.bounds.width * scale,
-                height: self.bounds.width * scale * (self.iconImageView.bounds.width/self.iconImageView.bounds.height)
-            )
-            
-            let options = PHImageRequestOptions()
-            options.deliveryMode = .highQualityFormat
-            options.resizeMode = .exact
-            options.isSynchronous = false
-            options.isNetworkAccessAllowed = true
-            PHImageManager.default().requestImage(
-                for: asset,
-                targetSize: newSize,
-                contentMode: .aspectFill,
-                options: options
-            ) { [weak self] image, info in
-                guard let sSelf = self else { return }
-                sSelf.iconImageView.image = image
-            }
+            PHAssetManager.transformPHAssetToImage(with: asset, completed: { [unowned self] (image) in
+                self.iconImageView.image = image
+            })
         }
     }
     
@@ -69,8 +51,9 @@ class AlbumListViewCell: UITableViewCell {
         self.accessoryType = .disclosureIndicator
 
         self.iconImageView.contentMode = .scaleAspectFill
+        self.iconImageView.clipsToBounds = true
+        
         addSubview(iconImageView)
-    
         addSubview(albumNameLabel)
         addSubview(countLabel)
     }

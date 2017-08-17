@@ -7,9 +7,54 @@
 //
 
 import UIKit
+import Photos
+
+class PHAssetManager {
+    
+    class func transformPHAssetToImage(with photoAsset: PHAsset, scaled: Bool = true, completed: @escaping (UIImage)->Void) {
+        
+        let options = PHImageRequestOptions()
+        options.deliveryMode = .highQualityFormat
+        options.resizeMode = .exact
+        options.isSynchronous = false
+        options.isNetworkAccessAllowed = true
+        
+        
+        let scale: CGFloat = UIScreen.main.scale
+        let newWidth: CGFloat = UIScreen.main.bounds.width * scale
+        
+        var newSize: CGSize = CGSize()
+        
+        if scaled {
+            if photoAsset.pixelWidth > Int(newWidth) {
+                
+                let newHeight: CGFloat = CGFloat(photoAsset.pixelHeight)/CGFloat(photoAsset.pixelWidth) * newWidth
+                newSize = CGSize(width: newWidth, height:newHeight)
+            } else {
+                newSize = CGSize(width: CGFloat(photoAsset.pixelWidth), height: CGFloat(photoAsset.pixelHeight))
+            }
+        } else {
+            newSize = PHImageManagerMaximumSize
+        }
+        
+        PHImageManager.default().requestImage(
+            for: photoAsset,
+            targetSize: newSize,
+            contentMode: .default,
+            options: options
+        ) { image, info in
+            if let img = image {
+                completed(img)
+            }
+        }
+    }
+
+}
 
 class AlbumPickerController: UINavigationController {
-
+    
+    var completedSelected:(([UIImage])->Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

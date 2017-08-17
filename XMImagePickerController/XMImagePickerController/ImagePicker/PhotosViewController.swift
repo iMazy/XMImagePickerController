@@ -119,7 +119,22 @@ class PhotosViewController: UIViewController {
     
     @objc private func confirmButtonAction() {
         let assetArray = self.getSelectedAssets()
-        print(assetArray)
+        
+        let albumNav = self.navigationController as! AlbumPickerController
+        
+        var imageArray: [UIImage] = [UIImage]()
+        assetArray.forEach({ (asset) in
+            PHAssetManager.transformPHAssetToImage(with: asset) { image in
+                imageArray.append(image)
+                
+                if imageArray.count == assetArray.count {
+                    if let complete = albumNav.completedSelected  {
+                        complete(imageArray)
+                    }
+                }
+            }
+        })
+        
         self.dismiss(animated: true, completion: nil)
     }
 

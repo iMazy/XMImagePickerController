@@ -50,7 +50,7 @@
                                             <constraint firstItem="uSG-BL-u3l" firstAttribute="top" secondItem="7uk-fu-Fjo" secondAttribute="top" id="Qmk-6b-c7F"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="collectionView" destination="uSG-BL-u3l" id="CfR-gV-l9W"/>
+                                            <outlet property="iconImageView" destination="uSG-BL-u3l" id="qA7-46-4Pu"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
