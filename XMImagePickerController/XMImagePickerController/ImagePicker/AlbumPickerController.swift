@@ -59,10 +59,6 @@ class AlbumPickerController: UINavigationController {
         
         self.interactivePopGestureRecognizer?.delegate = nil
         
-    }
-    
-    func addChildVC()  {
-        addChildViewController(AlbumListViewController())
-        addChildViewController(PhotosViewController())
+        viewControllers = [AlbumListViewController(),PhotosViewController()]
     }
 }

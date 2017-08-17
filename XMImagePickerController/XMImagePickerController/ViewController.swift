@@ -42,13 +42,12 @@ class ViewController: UIViewController {
                 return
             }
             
-            let nav = AlbumPickerController()
-            nav.addChildVC()
-            nav.completedSelected = { assets in
+            let AlbumPC = AlbumPickerController()
+            AlbumPC.completedSelected = { assets in
                 self.dataSource = assets
                 self.collectionView.reloadData()
             }
-            self.present(nav, animated: true, completion: nil)
+            self.present(AlbumPC, animated: true, completion: nil)
         }
     }
     
@@ -69,8 +68,6 @@ class ViewController: UIViewController {
             }
         }
     }
-
-
 }
 
 extension ViewController: UICollectionViewDataSource {

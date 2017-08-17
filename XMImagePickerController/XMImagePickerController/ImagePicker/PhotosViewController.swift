@@ -60,6 +60,10 @@ class PhotosViewController: UIViewController {
         fetchPhotos()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     fileprivate func setupUI() {
         
         let backButton = UIButton(type: .custom)
