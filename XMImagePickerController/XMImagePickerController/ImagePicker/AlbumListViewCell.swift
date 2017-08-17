@@ -7,18 +7,48 @@
 //
 
 import UIKit
+import Photos
 
 class AlbumListViewCell: UITableViewCell {
 
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var albumNameLabel: UILabel!
+    @IBOutlet weak var countLabel: UILabel!
+    
+    func config(with model: AlbumModel) {
+        self.albumNameLabel.text = model.name
+        self.countLabel.text = "(\(model.count))"
+        
+        if let asset = model.assetResult?.lastObject {
+            
+            let scale: CGFloat = UIScreen.main.scale
+            let newSize: CGSize = CGSize(
+                width: self.bounds.width * scale,
+                height: self.bounds.width * scale * (self.iconImageView.bounds.width/self.iconImageView.bounds.height)
+            )
+            
+            let options = PHImageRequestOptions()
+            options.deliveryMode = .highQualityFormat
+            options.resizeMode = .exact
+            options.isSynchronous = false
+            options.isNetworkAccessAllowed = true
+            PHImageManager.default().requestImage(
+                for: asset,
+                targetSize: newSize,
+                contentMode: .aspectFill,
+                options: options
+            ) { [weak self] image, info in
+                guard let sSelf = self else { return }
+                sSelf.iconImageView.image = image
+            }
+        }
+        
+        
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.iconImageView.contentMode = .scaleAspectFill
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }

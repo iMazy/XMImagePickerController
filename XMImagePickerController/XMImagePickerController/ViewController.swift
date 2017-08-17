@@ -80,5 +80,4 @@ extension ViewController: UICollectionViewDataSource {
 
 class HomeCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var collectionView: UIImageView!
-    
 }
