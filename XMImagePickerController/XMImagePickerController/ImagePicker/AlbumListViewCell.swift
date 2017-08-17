@@ -56,8 +56,6 @@ class AlbumListViewCell: UITableViewCell {
                 sSelf.iconImageView.image = image
             }
         }
-        
-        
     }
     
     

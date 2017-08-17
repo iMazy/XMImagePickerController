@@ -8,10 +8,12 @@
 
 import UIKit
 
-class AlbumNavigationController: UINavigationController {
+class AlbumPickerController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationBar.tintColor = UIColor.black
         
         navigationBar.titleTextAttributes = [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 17)]
         

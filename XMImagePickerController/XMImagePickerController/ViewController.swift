@@ -40,7 +40,7 @@ class ViewController: UIViewController {
                 return
             }
             
-            let nav = AlbumNavigationController()
+            let nav = AlbumPickerController()
             nav.addChildVC()
             self.present(nav, animated: true, completion: nil)
         }

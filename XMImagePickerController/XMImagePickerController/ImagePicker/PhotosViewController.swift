@@ -107,12 +107,38 @@ class PhotosViewController: UIViewController {
         view.addSubview(toolBarView)
         
         previewButton.frame = CGRect(x: 0, y: 0, width: 60, height: toolBarHeight)
+        previewButton.addTarget(self, action: #selector(preViewButtonAction), for: .touchUpInside)
         toolBarView.addSubview(previewButton)
         
         confirmButton.frame = CGRect(x: view.bounds.width-60-16, y: (toolBarHeight-30)/2, width: 60, height: 30)
+        confirmButton.addTarget(self, action: #selector(confirmButtonAction), for: .touchUpInside)
         confirmButton.layer.cornerRadius = 5
         toolBarView.addSubview(confirmButton)
         
+    }
+    
+    @objc private func confirmButtonAction() {
+        let assetArray = self.getSelectedAssets()
+        print(assetArray)
+        self.dismiss(animated: true, completion: nil)
+    }
+
+    @objc private func preViewButtonAction() {
+        
+        let assetArray = self.getSelectedAssets()
+        let preVC = PreViewViewController()
+        preVC.assetArray = assetArray
+        show(preVC, sender: nil)
+    }
+
+    private func getSelectedAssets() -> [PHAsset] {
+        var assetArray: [PHAsset] = [PHAsset]()
+        self.selectedIndexSet.forEach { (indexPath) in
+            if let asset = self.assetResult?.object(at: indexPath.row) {
+                assetArray.append(asset)
+            }
+        }
+        return assetArray
     }
     
     fileprivate func fetchPhotos() {
