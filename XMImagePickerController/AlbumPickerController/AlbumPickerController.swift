@@ -43,7 +43,6 @@ class PHAssetManager {
             }
         }
     }
-
 }
 
 open class AlbumPickerController: UINavigationController {

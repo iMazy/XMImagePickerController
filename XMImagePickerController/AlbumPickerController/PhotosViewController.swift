@@ -219,10 +219,7 @@ extension PhotosViewController: UICollectionViewDelegate, UICollectionViewDataSo
             self.selectedIndex.append(indexPath.row)
         } else {
             self.selectedIndex = self.selectedIndex.filter({ $0 != indexPath.row })
-        }
-        
-        print(self.selectedIndex)
-        
+        }        
         updateBottomToolBar()
         
     }
