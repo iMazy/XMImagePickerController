@@ -21,6 +21,7 @@
 		2105A9181F46CA4500C0F611 /* PickerChecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2105A9161F46CA4500C0F611 /* PickerChecked@2x.png */; };
 		2105A91B1F46CA5200C0F611 /* invalidName@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2105A9191F46CA5200C0F611 /* invalidName@2x.png */; };
 		2105A91C1F46CA5200C0F611 /* invalidName@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2105A91A1F46CA5200C0F611 /* invalidName@3x.png */; };
+		2105A93E1F46D9C500C0F611 /* AlbumResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2105A93D1F46D9C500C0F611 /* AlbumResources.bundle */; };
 		21916B5E1F44461E0057BA9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21916B5D1F44461E0057BA9B /* AppDelegate.swift */; };
 		21916B601F44461E0057BA9B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21916B5F1F44461E0057BA9B /* ViewController.swift */; };
 		21916B631F44461E0057BA9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21916B611F44461E0057BA9B /* Main.storyboard */; };
@@ -74,6 +75,7 @@
 		2105A9161F46CA4500C0F611 /* PickerChecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PickerChecked@2x.png"; sourceTree = "<group>"; };
 		2105A9191F46CA5200C0F611 /* invalidName@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invalidName@2x.png"; sourceTree = "<group>"; };
 		2105A91A1F46CA5200C0F611 /* invalidName@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invalidName@3x.png"; sourceTree = "<group>"; };
+		2105A93D1F46D9C500C0F611 /* AlbumResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlbumResources.bundle; sourceTree = "<group>"; };
 		21916B5A1F44461E0057BA9B /* XMImagePickerController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XMImagePickerController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21916B5D1F44461E0057BA9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21916B5F1F44461E0057BA9B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				2105A90D1F46C66C00C0F611 /* PreViewViewController.swift */,
 				2105A8FC1F46C5DC00C0F611 /* AlbumPickerController.h */,
 				2105A8FD1F46C5DC00C0F611 /* Info.plist */,
+				2105A93D1F46D9C500C0F611 /* AlbumResources.bundle */,
 			);
 			path = AlbumPickerController;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				2105A91C1F46CA5200C0F611 /* invalidName@3x.png in Resources */,
 				2105A91B1F46CA5200C0F611 /* invalidName@2x.png in Resources */,
 				2105A9181F46CA4500C0F611 /* PickerChecked@2x.png in Resources */,
+				2105A93E1F46D9C500C0F611 /* AlbumResources.bundle in Resources */,
 				2105A9171F46CA4500C0F611 /* PickerChecked.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
