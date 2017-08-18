@@ -27,15 +27,13 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, "8.0"
 
-
-
   s.source       = { :git => "https://github.com/Mazy-ma/XMImagePickerController.git", :tag => "#{s.version}" }
 
 
   s.source_files  = "XMImagePickerController", "XMImagePickerController/AlbumPickerController/*.{h,swift}"
 
 
-# s.public_header_files = "XMImagePickerController/AlbumPickerController/AlbumPickerController.swift"
+  s.public_header_files = "XMImagePickerController/AlbumPickerController/AlbumPickerController.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

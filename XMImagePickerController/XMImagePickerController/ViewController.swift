@@ -42,8 +42,8 @@ class ViewController: UIViewController {
                 return
             }
             
-            let AlbumPC = AlbumPickerController()
-            AlbumPC.completedSelected = { assets in
+            let albumPC = AlbumPickerController()
+            albumPC.completedSelected = { assets in
                 self.dataSource = assets
                 self.collectionView.reloadData()
             }
