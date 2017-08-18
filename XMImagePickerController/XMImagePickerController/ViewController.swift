@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import AlbumPickerController
 
 class ViewController: UIViewController {
 

@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 
 
 s.name         = "AlbumPickerController"
-s.version      = "0.0.3"
+s.version      = "0.0.5"
 
 s.summary      = "A simple framework for image MultiSelect"
 
@@ -45,7 +45,7 @@ s.public_header_files = "XMImagePickerController/AlbumPickerController/AlbumPick
 #
 
 s.resource  = "AlbumPickerController/AlbumResources.bundle"
-s.resources = "XMImagePickerController/AlbumPickerController/**/*.png"
+s.resources = "XMImagePickerController/AlbumPickerController/**/*.{bundle}" , "XMImagePickerController/AlbumPickerController/*.{bundle}"
 
 s.requires_arc = true
 

@@ -51,7 +51,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         coverView.alpha = 0.0
 //        coverView.isHidden = true
         
-        selectedImageView = UIImageView(image: UIImage(named: "AlbumResources.bundle/PickerChecked.png"))
+        selectedImageView = UIImageView(image: Bundle().selectedImage)
         
         selectedImageView.frame.origin = CGPoint(x: bounds.width-selectedImageView.bounds.width-8, y: 8)
 //        selectedImageView.isHidden = true
@@ -64,5 +64,28 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension Bundle {
+    var _bundle:Bundle?{
+        if let path = Bundle(for: AlbumPickerController.self).path(forResource: "AlbumResources", ofType: "bundle"){
+            return Bundle(path: path)
+        }
+        return nil
+    }
+    
+    var selectedImage: UIImage?{
+        if let path = _bundle?.path(forResource: "PickerChecked@2x", ofType: "png"){
+            return UIImage(contentsOfFile: path)!
+        }
+        return nil
+    }
+    
+    var backImageImage: UIImage? {
+        if let path = _bundle?.path(forResource: "invalidName@2x", ofType: "png"){
+            return UIImage(contentsOfFile: path)!
+        }
+        return nil
     }
 }
