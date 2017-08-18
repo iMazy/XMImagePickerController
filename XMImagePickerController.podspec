@@ -4,10 +4,12 @@ Pod::Spec.new do |s|
 
   s.name         = "XMImagePickerController"
   s.version      = "0.0.1"
-  s.summary      = "A short description of XMImagePickerController."
+
+  s.summary      = "A simple framework for image MultiSelect"
 
 
-  s.description  = "A simple framework for image MultiSelect"
+#s.description  = "A simple framework for image MultiSelect"
+
   s.homepage     = "https://github.com/Mazy-ma/XMImagePickerController"
 
   s.license      = "MIT"
@@ -30,10 +32,10 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/Mazy-ma/XMImagePickerController.git", :tag => "#{s.version}" }
 
 
-  s.source_files  = "Classes", "Classes/**/*.{h,m}"
+  s.source_files  = "XMImagePickerController", "XMImagePickerController/AlbumPickerController/*.{h,swift}"
 
 
-  # s.public_header_files = "Classes/**/*.h"
+# s.public_header_files = "XMImagePickerController/AlbumPickerController/AlbumPickerController.swift"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -45,9 +47,7 @@ Pod::Spec.new do |s|
   #
 
   # s.resource  = "icon.png"
-  # s.resources = "Resources/*.png"
-
-  # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
+  s.resources = "XMImagePickerController/AlbumPickerController/*.png"
 
   s.requires_arc = true
 
