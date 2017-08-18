@@ -50,7 +50,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         coverView.backgroundColor = UIColor.white
         coverView.alpha = 0.0
 //        coverView.isHidden = true
-        selectedImageView = UIImageView(image: UIImage(named: "PickerChecked.png"))
+        selectedImageView = UIImageView(image: UIImage(named: "AlbumResources.bundle/PickerChecked.png"))
         selectedImageView.frame.origin = CGPoint(x: bounds.width-selectedImageView.bounds.width-8, y: 8)
 //        selectedImageView.isHidden = true
         self.selectedImageView.transform = CGAffineTransform(scaleX: 0, y: 0)

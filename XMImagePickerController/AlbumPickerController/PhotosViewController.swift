@@ -72,7 +72,7 @@ class PhotosViewController: UIViewController {
         backButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         backButton.titleEdgeInsets = UIEdgeInsetsMake(0, 7, 0, 0)
         backButton.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0)
-        backButton.setImage(UIImage(named: "invalidName.png"), for: .normal)
+        backButton.setImage(UIImage(named: "AlbumResources.bundle/invalidName.png"), for: .normal)
         backButton.addTarget(self, action: #selector(backAction), for: .touchUpInside)
         backButton.sizeToFit()
         backButton.frame.size.width += 7

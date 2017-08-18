@@ -47,7 +47,7 @@ class ViewController: UIViewController {
                 self.dataSource = assets
                 self.collectionView.reloadData()
             }
-            self.present(AlbumPC, animated: true, completion: nil)
+            self.present(albumPC, animated: true, completion: nil)
         }
     }
     
