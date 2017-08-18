@@ -17,6 +17,10 @@
 		2105A9121F46C66C00C0F611 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2105A90B1F46C66C00C0F611 /* PhotosViewController.swift */; };
 		2105A9131F46C66C00C0F611 /* PreViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2105A90C1F46C66C00C0F611 /* PreViewCollectionViewCell.swift */; };
 		2105A9141F46C66C00C0F611 /* PreViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2105A90D1F46C66C00C0F611 /* PreViewViewController.swift */; };
+		2105A9171F46CA4500C0F611 /* PickerChecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 2105A9151F46CA4500C0F611 /* PickerChecked.png */; };
+		2105A9181F46CA4500C0F611 /* PickerChecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2105A9161F46CA4500C0F611 /* PickerChecked@2x.png */; };
+		2105A91B1F46CA5200C0F611 /* invalidName@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2105A9191F46CA5200C0F611 /* invalidName@2x.png */; };
+		2105A91C1F46CA5200C0F611 /* invalidName@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2105A91A1F46CA5200C0F611 /* invalidName@3x.png */; };
 		21916B5E1F44461E0057BA9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21916B5D1F44461E0057BA9B /* AppDelegate.swift */; };
 		21916B601F44461E0057BA9B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21916B5F1F44461E0057BA9B /* ViewController.swift */; };
 		21916B631F44461E0057BA9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21916B611F44461E0057BA9B /* Main.storyboard */; };
@@ -66,6 +70,10 @@
 		2105A90B1F46C66C00C0F611 /* PhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		2105A90C1F46C66C00C0F611 /* PreViewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		2105A90D1F46C66C00C0F611 /* PreViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreViewViewController.swift; sourceTree = "<group>"; };
+		2105A9151F46CA4500C0F611 /* PickerChecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PickerChecked.png; sourceTree = "<group>"; };
+		2105A9161F46CA4500C0F611 /* PickerChecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PickerChecked@2x.png"; sourceTree = "<group>"; };
+		2105A9191F46CA5200C0F611 /* invalidName@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invalidName@2x.png"; sourceTree = "<group>"; };
+		2105A91A1F46CA5200C0F611 /* invalidName@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invalidName@3x.png"; sourceTree = "<group>"; };
 		21916B5A1F44461E0057BA9B /* XMImagePickerController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XMImagePickerController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21916B5D1F44461E0057BA9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21916B5F1F44461E0057BA9B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +112,10 @@
 		2105A8FB1F46C5DC00C0F611 /* AlbumPickerController */ = {
 			isa = PBXGroup;
 			children = (
+				2105A9191F46CA5200C0F611 /* invalidName@2x.png */,
+				2105A91A1F46CA5200C0F611 /* invalidName@3x.png */,
+				2105A9151F46CA4500C0F611 /* PickerChecked.png */,
+				2105A9161F46CA4500C0F611 /* PickerChecked@2x.png */,
 				2105A9071F46C66C00C0F611 /* AlbumListViewCell.swift */,
 				2105A9081F46C66C00C0F611 /* AlbumListViewController.swift */,
 				2105A9091F46C66C00C0F611 /* AlbumPickerController.swift */,
@@ -261,6 +273,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2105A91C1F46CA5200C0F611 /* invalidName@3x.png in Resources */,
+				2105A91B1F46CA5200C0F611 /* invalidName@2x.png in Resources */,
+				2105A9181F46CA4500C0F611 /* PickerChecked@2x.png in Resources */,
+				2105A9171F46CA4500C0F611 /* PickerChecked.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +533,7 @@
 				2105A9041F46C5DC00C0F611 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		21916B551F44461E0057BA9B /* Build configuration list for PBXProject "XMImagePickerController" */ = {
 			isa = XCConfigurationList;
