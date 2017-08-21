@@ -12,10 +12,14 @@ import Photos
 class PreViewViewController: UIViewController {
     
     var assetArray: [PHAsset]?
+    var selectedIndex: [Int] = []
+    
+    fileprivate var selectedIndexCopy: [Int] = []
     
     fileprivate var collectionView: UICollectionView!
     fileprivate var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     fileprivate var pageControl: UIPageControl!
+    fileprivate var selectButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,8 +63,20 @@ class PreViewViewController: UIViewController {
         self.pageControl.numberOfPages = self.assetArray?.count ?? 0
         view.addSubview(pageControl)
         
+        self.selectButton = UIButton(type: .custom)
+        self.selectButton.frame.size = CGSize(width: 25, height: 25)
+        self.selectButton.frame.origin = CGPoint(x: UIScreen.main.bounds.width-35, y: UIScreen.main.bounds.height-35)
+        self.selectButton.setBackgroundImage(Bundle().selectedImage, for: .normal)
+        self.selectButton.setBackgroundImage(Bundle().selectNoneImage, for: .selected)
+        self.selectButton.addTarget(self, action: #selector(selectButtonClick), for: .touchUpInside)
+        self.view.addSubview(selectButton)
+        
     }
 
+    @objc private func selectButtonClick(button: UIButton) {
+        button.isSelected = !button.isSelected
+    }
+    
     @objc private func confirmButtonAction() {
 
         let albumNav = self.navigationController as! AlbumPickerController

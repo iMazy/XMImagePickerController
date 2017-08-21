@@ -88,4 +88,11 @@ extension Bundle {
         }
         return nil
     }
+    
+    var selectNoneImage: UIImage?{
+        if let path = _bundle?.path(forResource: "selected_none", ofType: "png"){
+            return UIImage(contentsOfFile: path)!
+        }
+        return nil
+    }
 }
