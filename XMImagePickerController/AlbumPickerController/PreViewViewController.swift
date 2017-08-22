@@ -27,6 +27,7 @@ class PreViewViewController: UIViewController {
     fileprivate var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     fileprivate var pageControl: UIPageControl!
     fileprivate var selectButton: UIButton!
+    fileprivate var bottomToolBar: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,8 @@ class PreViewViewController: UIViewController {
     }
     
     fileprivate func setupUI() {
+        
+        view.backgroundColor = UIColor.lightGray
         
         let backButton = UIButton(type: .custom)
         backButton.setTitle("返回", for: .normal)
@@ -58,12 +61,12 @@ class PreViewViewController: UIViewController {
         
         self.navigationItem.title = "已选照片(\(self.assetArray?.count ?? 0))"
         
-        self.flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        self.flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-36)
         self.flowLayout.scrollDirection = .horizontal
         self.flowLayout.minimumLineSpacing = 0
         self.flowLayout.minimumInteritemSpacing = 0
         
-        self.collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: self.flowLayout)
+        self.collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-36), collectionViewLayout: self.flowLayout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.showsHorizontalScrollIndicator = false
@@ -74,23 +77,27 @@ class PreViewViewController: UIViewController {
         
         view.addSubview(collectionView)
         
+        self.bottomToolBar = UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height-35, width: UIScreen.main.bounds.width, height: 35))
+        self.bottomToolBar.backgroundColor = UIColor.white
+        view.addSubview(bottomToolBar)
+        
         self.pageControl = UIPageControl()
         self.pageControl.currentPage = 0
         self.pageControl.hidesForSinglePage = true
         self.pageControl.pageIndicatorTintColor = UIColor.darkGray
         self.pageControl.currentPageIndicatorTintColor = UIColor(red: 255/255.0, green: 42/255.0, blue: 102/255.0, alpha: 1.0)
-        self.pageControl.frame = CGRect(x: 0, y: self.collectionView.bounds.height-37, width: UIScreen.main.bounds.width, height: 37)
+        self.pageControl.frame = CGRect(x: 35, y: 0, width: UIScreen.main.bounds.width-70, height: 35)
         self.pageControl.numberOfPages = self.assetArray?.count ?? 0
         self.pageControl.isUserInteractionEnabled = false
-        view.addSubview(pageControl)
+        self.bottomToolBar.addSubview(pageControl)
         
         self.selectButton = UIButton(type: .custom)
         self.selectButton.frame.size = CGSize(width: 25, height: 25)
-        self.selectButton.frame.origin = CGPoint(x: UIScreen.main.bounds.width-35, y: UIScreen.main.bounds.height-35)
+        self.selectButton.frame.origin = CGPoint(x: UIScreen.main.bounds.width-35, y: 5)
         self.selectButton.setBackgroundImage(Bundle().selectedImage, for: .normal)
         self.selectButton.setBackgroundImage(Bundle().selectNoneImage, for: .selected)
         self.selectButton.addTarget(self, action: #selector(selectButtonClick), for: .touchUpInside)
-        self.view.addSubview(selectButton)
+        self.bottomToolBar.addSubview(selectButton)
         
     }
     
