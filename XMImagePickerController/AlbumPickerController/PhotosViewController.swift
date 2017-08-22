@@ -57,8 +57,40 @@ class PhotosViewController: UIViewController {
         
         setupUI()
         
-        fetchPhotos()
+        self.getPhotoLibraryAccessStatus { [unowned self] (status) in
+            guard status == true else {
+                
+                let alertVC = UIAlertController(title: "无法获取照片", message: "请开启照片权限", preferredStyle: .alert)
+                let sureAction = UIAlertAction(title: "确认", style: .default, handler: { (_) in
+                    self.dismiss(animated: true, completion: nil)
+                })
+                alertVC.addAction(sureAction)
+                self.present(alertVC, animated: true, completion: nil)
+                
+                return
+            }
+            self.fetchPhotos()
+        }
     }
+    
+    private func getPhotoLibraryAccessStatus(_ callback: @escaping (_ granted: Bool) -> Void) {
+        let status: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+        switch status {
+        case .authorized:
+            callback(true)
+        case .denied, .restricted:
+            callback(false)
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization() { status in
+                if status == .authorized {
+                    callback(true)
+                } else {
+                    callback(false)
+                }
+            }
+        }
+    }
+
     
     fileprivate func setupUI() {
         

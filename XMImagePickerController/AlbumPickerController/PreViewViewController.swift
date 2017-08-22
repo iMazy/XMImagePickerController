@@ -121,6 +121,8 @@ class PreViewViewController: UIViewController {
         }
         
         self.navigationItem.rightBarButtonItem?.isEnabled = self.selectedIndexCopy.filter({$0 != -1}).count > 0
+        
+        self.navigationItem.title = "已选照片(\(self.selectedIndexCopy.filter({$0 != -1}).count))"
     }
     
     @objc private func confirmButtonAction() {
@@ -172,8 +174,10 @@ extension PreViewViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.navigationController?.popViewController(animated: true)
+        if let comfirmClosure = self.backToConfirmSelect {
+            comfirmClosure(self.selectedIndexCopy)
+        }
     }
-    
 }
 
 extension PreViewViewController {

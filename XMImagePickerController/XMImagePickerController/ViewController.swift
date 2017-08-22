@@ -34,40 +34,12 @@ class ViewController: UIViewController {
     
     @IBAction func selectePhotos(_ sender: UIBarButtonItem) {
         
-        self.getPhotoLibraryAccessStatus { (status) in
-            guard status == true else {
-                let alertVC = UIAlertController(title: "无法获取照片", message: "请开启照片权限", preferredStyle: .alert)
-                let cancelAction = UIAlertAction(title: "确认", style: .default, handler: nil)
-                alertVC.addAction(cancelAction)
-                self.present(alertVC, animated: true, completion: nil)
-                return
-            }
-            
-            let albumPC = AlbumPickerController()
-            albumPC.completedSelected = { assets in
-                self.dataSource = assets
-                self.collectionView.reloadData()
-            }
-            self.present(albumPC, animated: true, completion: nil)
+        let albumPC = AlbumPickerController()
+        albumPC.completedSelected = { assets in
+            self.dataSource = assets
+            self.collectionView.reloadData()
         }
-    }
-    
-    func getPhotoLibraryAccessStatus(_ callback: @escaping (_ granted: Bool) -> Void) {
-        let status: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
-        switch status {
-        case .authorized:
-            callback(true)
-        case .denied, .restricted:
-            callback(false)
-        case .notDetermined:
-            PHPhotoLibrary.requestAuthorization() { status in
-                if status == .authorized {
-                    callback(true)
-                } else {
-                    callback(false)
-                }
-            }
-        }
+        self.present(albumPC, animated: true, completion: nil)
     }
 }
 
