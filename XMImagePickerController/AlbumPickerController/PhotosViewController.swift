@@ -144,6 +144,19 @@ class PhotosViewController: UIViewController {
         let preVC = PreViewViewController()
         preVC.assetArray = assetArray
         preVC.selectedIndex = self.selectedIndex
+        
+        preVC.backToConfirmSelect = { selectIndex in
+            
+            var tempSelectedArray = self.selectedIndex
+            
+            for (index, value) in selectIndex.enumerated() {
+                if value == -1 {
+                    let cancelIndex = tempSelectedArray[index]
+                    self.collectionView(self.collectionView, didSelectItemAt: IndexPath(row: cancelIndex, section: 0))
+                }
+            }
+        }
+        
         show(preVC, sender: nil)
     }
 

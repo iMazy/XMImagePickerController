@@ -12,9 +12,16 @@ import Photos
 class PreViewViewController: UIViewController {
     
     var assetArray: [PHAsset]?
-    var selectedIndex: [Int] = []
     
     fileprivate var selectedIndexCopy: [Int] = []
+    
+    var selectedIndex: [Int] = []  {
+        didSet {
+            self.selectedIndexCopy = selectedIndex
+        }
+    }
+    
+    var backToConfirmSelect:(([Int])->Void)?
     
     fileprivate var collectionView: UICollectionView!
     fileprivate var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -28,6 +35,19 @@ class PreViewViewController: UIViewController {
     }
     
     fileprivate func setupUI() {
+        
+        let backButton = UIButton(type: .custom)
+        backButton.setTitle("返回", for: .normal)
+        backButton.setTitleColor(UIColor.black, for: .normal)
+        backButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        backButton.titleEdgeInsets = UIEdgeInsetsMake(0, 7, 0, 0)
+        backButton.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0)
+        backButton.setImage(Bundle().backImageImage, for: .normal)
+        backButton.addTarget(self, action: #selector(backAction), for: .touchUpInside)
+        backButton.sizeToFit()
+        backButton.frame.size.width += 7
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "确认",
@@ -61,6 +81,7 @@ class PreViewViewController: UIViewController {
         self.pageControl.currentPageIndicatorTintColor = UIColor(red: 255/255.0, green: 42/255.0, blue: 102/255.0, alpha: 1.0)
         self.pageControl.frame = CGRect(x: 0, y: self.collectionView.bounds.height-37, width: UIScreen.main.bounds.width, height: 37)
         self.pageControl.numberOfPages = self.assetArray?.count ?? 0
+        self.pageControl.isUserInteractionEnabled = false
         view.addSubview(pageControl)
         
         self.selectButton = UIButton(type: .custom)
@@ -72,20 +93,47 @@ class PreViewViewController: UIViewController {
         self.view.addSubview(selectButton)
         
     }
+    
+    @objc fileprivate func backAction() {
+        self.navigationController?.popViewController(animated: true)
+        
+        if let comfirmClosure = self.backToConfirmSelect {
+            comfirmClosure(self.selectedIndexCopy)
+        }
+    }
 
     @objc private func selectButtonClick(button: UIButton) {
         button.isSelected = !button.isSelected
+        
+        let pageIndex = Int(collectionView.contentOffset.x / collectionView.bounds.width)
+        
+        if button.isSelected {
+            self.selectedIndexCopy[pageIndex] = -1
+        } else {
+            self.selectedIndexCopy[pageIndex] = self.selectedIndex[pageIndex]
+        }
+        
+        self.navigationItem.rightBarButtonItem?.isEnabled = self.selectedIndexCopy.filter({$0 != -1}).count > 0
     }
     
     @objc private func confirmButtonAction() {
-
+        
+        guard let assets = self.assetArray else { return }
+        
+        var completedAsset: [PHAsset] = [PHAsset]()
+        
+        for (index, value) in self.selectedIndexCopy.enumerated() {
+            if value != -1 {
+                completedAsset.append((assets[index]))
+            }
+        }
         let albumNav = self.navigationController as! AlbumPickerController
         var imageArray: [UIImage] = [UIImage]()
-        assetArray?.forEach({ (asset) in
+        completedAsset.forEach({ (asset) in
             PHAssetManager.transformPHAssetToImage(with: asset) { image in
                 imageArray.append(image)
                 
-                if imageArray.count == self.assetArray?.count {
+                if imageArray.count == completedAsset.count {
                     if let complete = albumNav.completedSelected  {
                         complete(imageArray)
                     }
@@ -119,9 +167,22 @@ extension PreViewViewController: UICollectionViewDataSource, UICollectionViewDel
         self.navigationController?.popViewController(animated: true)
     }
     
+}
+
+extension PreViewViewController {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageOffset = scrollView.contentOffset.x / scrollView.bounds.width
         self.pageControl.currentPage = Int(pageOffset + 0.5)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let pageIndex = Int(scrollView.contentOffset.x / scrollView.bounds.width)
+        if self.selectedIndexCopy[pageIndex] == -1 {
+            self.selectButton.isSelected = true
+        } else {
+            self.selectButton.isSelected = false
+        }
     }
 }
 
