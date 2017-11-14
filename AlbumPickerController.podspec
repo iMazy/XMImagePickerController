@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 
 
 s.name         = "AlbumPickerController"
-s.version      = "0.0.8"
+s.version      = "1.0.0"
 
 s.summary      = "A simple framework for image MultiSelect"
 
