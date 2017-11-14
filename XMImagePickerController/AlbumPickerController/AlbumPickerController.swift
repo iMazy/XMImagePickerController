@@ -48,16 +48,18 @@ class PHAssetManager {
 open class AlbumPickerController: UINavigationController {
     
     open var completedSelected:(([UIImage])->Void)?
+    open var limitImageCount: Int = 9
     
     override open func viewDidLoad() {
         super.viewDidLoad()
         
         navigationBar.tintColor = UIColor.black
         
-        navigationBar.titleTextAttributes = [NSFontAttributeName:UIFont.boldSystemFont(ofSize: 17)]
+        navigationBar.titleTextAttributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 17)]
         
         self.interactivePopGestureRecognizer?.delegate = nil
-        
-        viewControllers = [AlbumListViewController(),PhotosViewController()]
+        let photosVC = PhotosViewController()
+        photosVC.limitImageCount = self.limitImageCount
+        viewControllers = [AlbumListViewController(),photosVC]
     }
 }

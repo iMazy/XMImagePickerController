@@ -35,6 +35,7 @@ class ViewController: UIViewController {
     @IBAction func selectePhotos(_ sender: UIBarButtonItem) {
         
         let albumPC = AlbumPickerController()
+        albumPC.limitImageCount = 1
         albumPC.completedSelected = { assets in
             self.dataSource = assets
             self.collectionView.reloadData()

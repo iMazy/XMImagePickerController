@@ -45,7 +45,7 @@ class AlbumListViewController: UIViewController {
         view.addSubview(tableView)
     }
     
-    func dismissAction() {
+    @objc func dismissAction() {
         self.dismiss(animated: true, completion: nil)
     }
 
@@ -74,9 +74,9 @@ extension AlbumListViewController {
         
         let userAlbums = PHAssetCollection.fetchAssetCollections(with: PHAssetCollectionType.smartAlbum, subtype: .any, options: nil)
         
-        userAlbums.enumerateObjects({
+        userAlbums.enumerateObjects({asset,_,_ in
             
-            let collection = $0.0
+            let collection = asset
             
             guard let name = collection.localizedTitle else {
                 return
@@ -93,7 +93,6 @@ extension AlbumListViewController {
             self.albums.append(model)
             
             self.tableView.reloadData()
-            
         })
         
     }

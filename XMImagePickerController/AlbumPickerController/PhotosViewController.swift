@@ -12,6 +12,7 @@ import Photos
 class PhotosViewController: UIViewController {
     
     var assetResult: PHFetchResult<PHAsset>?
+    var limitImageCount: Int = 9
     fileprivate var selectedIndex: [Int] = []
     
     fileprivate lazy var fetchOptions: PHFetchOptions = {
@@ -247,8 +248,8 @@ extension PhotosViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         let cell = collectionView.cellForItem(at: indexPath) as! PhotoCollectionViewCell
         
-        if self.selectedIndex.count > 8 && !cell.isSelect {
-            let alertVC = UIAlertController(title: "你最多只能选择9张照片", message: nil, preferredStyle: .alert)
+        if self.selectedIndex.count > self.limitImageCount-1 && !cell.isSelect {
+            let alertVC = UIAlertController(title: "你最多只能选择\(self.limitImageCount)张照片", message: nil, preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "我知道了", style: .default, handler: nil)
             alertVC.addAction(cancelAction)
             self.present(alertVC, animated: true, completion: nil)
